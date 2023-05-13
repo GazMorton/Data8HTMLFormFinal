@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="Data8.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="static/Data8.css">  -->
+    <title>Registration Form</title>
+    <style>
+        .error {
+            color: red;
+        }
+        
+    div {
+        margin-bottom: 10px;
+    }
+/* ensring that the input boxes are aligned for neatness */
+    label {
+        display: inline-block;
+        width: 150px;
+        text-align: right;
+    }
+    
+    </style>
+</head>
+<body>
+    <div id="header-page">
+    </div>
+    <h2> Contact Details </h2>
+    <form id="registrationForm" onsubmit="validateForm(event)">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" required>
+        <br>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" required>
+        <br>
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle" required>
+        <br>
+        <label for="company">Company:</label>
+        <input type="text" id="company" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <span id="emailError" class="error"></span>
+        <br>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form field values
+            var firstName = document.getElementById('firstName').value;
+            var surname = document.getElementById('surname').value;
+            var jobTitle = document.getElementById('jobTitle').value;
+            var company = document.getElementById('company').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+
+            // Validate email address using regular expression
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var isValidEmail = emailPattern.test(email);
+
+            // Array of valid email domain extensions
+            const validExtensions = ['.com', '.net', '.org', '.co.uk', '.co'];
+            
+            // Check if the email domain extension is valid
+            const validExtension = validExtensions.some(extension => email.endsWith(extension));
+            if (!validExtension) {
+        document.getElementById('emailError').textContent = 'Invalid email domain extension.';
+        return;
+        }
+
+            // Display email validation error if email is invalid
+            var emailError = document.getElementById('emailError');
+            if (!isValidEmail) {
+                emailError.textContent = 'Please enter a valid email address.';
+            } else {
+                emailError.textContent = '';
+                // Proceed with form submission if all fields are valid
+                document.getElementById('registrationForm').submit();
+            }
+        }
+    </script>
+</body>
+</html>
